@@ -1,12 +1,17 @@
+import { atom, read, update } from 'claude-code'
 import type { Register } from 'claude-code'
 
 import { HELP, SUBCOMMANDS } from '../src/help'
+import { formatLine, type RepoStatus } from '../src/line'
+import type { BandLine } from '../types'
 
 const PANE = 'prog'
 // The router skill. The mod registers /prog itself: the menu lists a
 // registered command by its plain name, but a skill as /prog-tracker:<skill>.
 const SKILL = 'prog-tracker:cmd'
 const DESCRIPTION = 'Help, status and plans for this repo'
+
+const line = atom({ plugin: 'prog-tracker', key: 'line' } as const, null as BandLine)
 
 // The pane's body; the module's own, so a reload resets it to the help.
 let paneText = HELP
@@ -42,6 +47,17 @@ async function status($: any): Promise<string> {
   }
 }
 
+/** Recomputes the band from `prog status --json`; empty outside a prog repo. */
+async function refreshBand($: any) {
+  let text: string | null = null
+  try {
+    const r = await $.process.run([`${$.plugin.root}/bin/prog`, 'status', '--json'])
+    const s: RepoStatus | null = r.exitCode === 0 ? JSON.parse(r.stdout) : null
+    if (s && s.blockVersion !== null) text = formatLine(s)
+  } catch {}
+  await update($, line, () => text)
+}
+
 export const register: Register = on => {
   on('session.start', async ($, e, next) => {
     try {
@@ -53,6 +69,7 @@ export const register: Register = on => {
     } catch (err) {
       $.ui.toast(`prog: couldn't add /prog (${String(err)}); /${SKILL} still works`)
     }
+    void refreshBand($)
     return next(e)
   })
 
@@ -87,7 +104,27 @@ export const register: Register = on => {
   })
   on('prompt.submit', async ($, e, next) => {
     if (paneOpen && e.command?.name !== 'prog') await close($)
+    void refreshBand($)
     return next(e)
+  })
+
+  // Branch, plans and uncommitted work change during a turn.
+  on('turn.complete', async ($, e, next) => {
+    void refreshBand($)
+    return next(e)
+  })
+
+  // The band: one dim line above the prompt, cut at the screen edge. Where you
+  // are only; /prog status says what's next.
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    const text = await read($, line)
+    if (text === null || e.props.hasSurvey) return next(e)
+    const { Text } = $.ui.resolve(e)
+    return (
+      <Text dimColor wrap="truncate-end">
+        {text}
+      </Text>
+    )
   })
 
   on('prompt.autocomplete', async ($, e, next) => {
