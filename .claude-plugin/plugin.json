@@ -1,0 +1,7 @@
+{
+  "name": "prog",
+  "version": "2.0.0",
+  "description": "Keep repos navigable across long breaks: /prog resumes where you were; plans in .plans/, the why in commit bodies, a mechanical docs check.",
+  "author": { "name": "Vienna McCarthy" },
+  "repository": "https://github.com/viennamccarthy/prog"
+}
