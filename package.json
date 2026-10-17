@@ -1,5 +1,6 @@
 {
   "name": "prog",
+  "version": "2.0.0",
   "type": "module",
   "bin": {
     "prog": "bin/prog"

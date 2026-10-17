@@ -7,8 +7,13 @@ import { basename, dirname, join, normalize } from 'node:path';
 
 const MAX_WIKI_LINES = 150;
 const SOURCE_EXT = /\.(ts|tsx|js|jsx|mjs|cjs|css)$/;
-// Vendored or generated material is never edited by hand, so it isn't policed.
-const SKIP = [/(^|\/)docs\/reference\//, /(^|\/)node_modules\//, /\.gen\.ts$/];
+// Vendored or generated material is never edited by hand, and templates hold placeholders, so neither is policed.
+const SKIP = [
+  /(^|\/)docs\/reference\//,
+  /(^|\/)node_modules\//,
+  /(^|\/)templates\//,
+  /\.gen\.ts$/,
+];
 
 /** Blank out fenced and inline code (keeping offsets) so examples aren't read as links. */
 function blankCode(text: string): string {
