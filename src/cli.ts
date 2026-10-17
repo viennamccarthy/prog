@@ -8,7 +8,8 @@ import { markTidy, tidyOverdue } from './tidy';
 
 const USAGE = `usage: prog <command>
   help                     what /prog does (the help pane's text)
-  status [--json|--line]   repo state: plans, branch, uncommitted work
+  status [--json|--line|--full]  repo state: plans, branch, uncommitted work
+                           (--full: next steps not shortened)
   check-docs               mechanical docs check (exits 1 on problems)
   hook session-start       SessionStart hook response (JSON)
   mark-tidy                record that this repo was just tidied
@@ -34,7 +35,7 @@ switch (cmd) {
       process.exit(1);
     } else if (args.includes('--line')) console.log(formatLine(s));
     else {
-      console.log(formatSummary(s));
+      console.log(formatSummary(s, args.includes('--full')));
       if (s.blockVersion === null)
         console.log(`prog isn't set up in ${s.repo}: /prog setup adds it.`);
     }

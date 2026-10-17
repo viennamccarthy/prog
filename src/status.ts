@@ -83,12 +83,18 @@ export function formatLine(s: RepoStatus): string {
   return parts.join(' · ');
 }
 
-/** Multi-line summary: branch state, then each plan with its next step. */
-export function formatSummary(s: RepoStatus): string {
+const NEXT_MAX = 80;
+
+function shorten(s: string): string {
+  return s.length <= NEXT_MAX ? s : `${s.slice(0, NEXT_MAX - 1).trimEnd()}…`;
+}
+
+/** Multi-line summary: branch state, then each plan with its next step (shortened unless `full`). */
+export function formatSummary(s: RepoStatus, full = false): string {
   const state = `branch ${s.branch}${s.dirty ? `, ${s.dirty} uncommitted` : ''}`;
   const lines = s.plans.map((p) => {
     const next = p.next
-      ? `next: ${p.next}`
+      ? `next: ${full ? p.next : shorten(p.next)}`
       : 'all steps ticked; close it with /prog done';
     return `  • ${p.name} [${p.status}] ${p.done}/${p.total} → ${next}`;
   });

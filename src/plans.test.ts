@@ -45,8 +45,7 @@ test('a plan with every step ticked has no next step', () => {
   expect(p?.status).toBe('unknown');
 });
 
-test('long steps are shortened', () => {
-  const p = parsePlan('3-x', `- [ ] ${'word '.repeat(40)}`);
-  expect(p?.next?.length).toBeLessThanOrEqual(80);
-  expect(p?.next?.endsWith('…')).toBe(true);
+test('the next step is kept whole', () => {
+  const step = 'word '.repeat(40).trim();
+  expect(parsePlan('3-x', `- [ ] ${step}`)?.next).toBe(step);
 });

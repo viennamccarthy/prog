@@ -6,12 +6,11 @@ export interface Plan {
   status: string;
   done: number;
   total: number;
-  /** First unchecked step, shortened; undefined when every step is ticked. */
+  /** First unchecked step; undefined when every step is ticked. */
   next?: string;
 }
 
 export const PLAN_NAME = /^(\d+)-[a-z0-9-]+$/;
-const NEXT_MAX = 80;
 
 /** Reads a plan's frontmatter and checkbox steps. Returns null if the name isn't `<issue>-<slug>`. */
 export function parsePlan(name: string, text: string): Plan | null {
@@ -34,7 +33,7 @@ export function parsePlan(name: string, text: string): Plan | null {
     if (body.startsWith('~~')) continue;
     total++;
     if (s[1] !== ' ') done++;
-    else next ??= shorten(body.replace(/\*\*/g, ''));
+    else next ??= body.replace(/\*\*/g, '');
   }
 
   return {
@@ -46,8 +45,4 @@ export function parsePlan(name: string, text: string): Plan | null {
     total,
     next,
   };
-}
-
-function shorten(s: string): string {
-  return s.length <= NEXT_MAX ? s : `${s.slice(0, NEXT_MAX - 1).trimEnd()}…`;
 }

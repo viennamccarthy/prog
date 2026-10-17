@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parsePlan } from './plans';
 import { sessionStart } from './session-start';
-import { formatLine, type RepoStatus } from './status';
+import { formatLine, formatSummary, type RepoStatus } from './status';
 import { tidyOverdue } from './tidy';
 
 const base: RepoStatus = {
@@ -44,6 +44,12 @@ test('an older block and an overdue tidy are flagged', () => {
   const msg = sessionStart({ ...base, blockVersion: 1 }, 45)!.systemMessage;
   expect(msg).toContain('rules block is v1; prog\'s is v2');
   expect(msg).toContain('45 days ago');
+});
+
+test('the summary shortens long next steps unless asked for in full', () => {
+  const long = { ...base, plans: [parsePlan('3-x', `- [ ] ${'word '.repeat(40)}`)!], strays: [] };
+  expect(formatSummary(long)).toContain('…');
+  expect(formatSummary(long, true)).not.toContain('…');
 });
 
 test('the band line features the plan for the current branch', () => {
