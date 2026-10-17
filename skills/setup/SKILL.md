@@ -1,6 +1,7 @@
 ---
 name: setup
 description: Add prog to a repo, or upgrade its rules block — the marked block in root CLAUDE.md, docs/ folders, the docs check in CI, and migrating existing plans and TODOs. Use when the user asks to set up or install prog (or "the repo system") in a project, accepts the session-start offer, or when the session-start message says the rules block is out of date.
+user-invocable: false
 ---
 
 # Set up or upgrade prog in a repo

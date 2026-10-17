@@ -5,7 +5,7 @@ A personal Claude Code plugin for keeping repos navigable across long breaks: on
 ## Install
 
 ```
-/plugin install prog --marketplace viennamccarthy/prog
+/plugin install prog-tracker --marketplace viennamccarthy/prog
 ```
 
 Needs [Bun](https://bun.sh) on the PATH.

@@ -1,11 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { checkDocs } from './check-docs';
+import { HELP } from './help';
 import { sessionStart } from './session-start';
 import { formatLine, formatSummary, gitRoot, repoStatus } from './status';
 import { markTidy, tidyOverdue } from './tidy';
 
 const USAGE = `usage: prog <command>
+  help                     what /prog does (the help pane's text)
   status [--json|--line]   repo state: plans, branch, uncommitted work
   check-docs               mechanical docs check (exits 1 on problems)
   hook session-start       SessionStart hook response (JSON)
@@ -31,7 +33,11 @@ switch (cmd) {
       console.error('prog: not in a git repo');
       process.exit(1);
     } else if (args.includes('--line')) console.log(formatLine(s));
-    else console.log(formatSummary(s));
+    else {
+      console.log(formatSummary(s));
+      if (s.blockVersion === null)
+        console.log(`prog isn't set up in ${s.repo}: /prog setup adds it.`);
+    }
     break;
   }
   case 'check-docs': {
@@ -75,6 +81,9 @@ switch (cmd) {
     markTidy(dataDir, root, Date.now());
     break;
   }
+  case 'help':
+    console.log(HELP);
+    break;
   case '--version':
     console.log(version);
     break;

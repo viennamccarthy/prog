@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "prog",
+      "name": "prog-tracker",
       "source": "./",
       "description": "Keep repos navigable across long breaks: /prog resumes where you were; plans in .plans/, the why in commit bodies, a mechanical docs check."
     }

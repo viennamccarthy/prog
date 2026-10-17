@@ -32,7 +32,7 @@ export function sessionStart(
   if (tidyOverdueDays !== null)
     notes.push(`Last tidy was ${tidyOverdueDays} days ago. Run /prog tidy.`);
 
-  const summary = [formatSummary(s), ...notes, 'Run /prog to resume.'].join(
+  const summary = [formatSummary(s), ...notes, '/prog resume picks up; /prog help lists the rest.'].join(
     '\n',
   );
   return response(

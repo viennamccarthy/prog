@@ -1,6 +1,7 @@
 ---
 name: why
 description: Explain why a line, block or file is the way it is, and what to watch before changing it, by tracing git blame → commit → PR → issue → docs. Use when the user asks "why is this like this?", "why does this exist?", "can I change/remove this?", or points at a file/line before editing it; and before changing code whose purpose isn't obvious.
+user-invocable: false
 ---
 
 # Why is this like this?

@@ -1,6 +1,6 @@
 ---
 name: session-recon
-description: Finds the previous Claude Code session in the current project that owns uncommitted work (or the most recent meaningful session), reads a compact digest of it, and reports what was being done, what to commit, what is unfinished, and what is still open. Used by bare /prog; read-only.
+description: Finds the previous Claude Code session in the current project that owns uncommitted work (or the most recent meaningful session), reads a compact digest of it, and reports what was being done, what to commit, what is unfinished, and what is still open. Used by /prog resume; read-only.
 model: sonnet
 effort: medium
 tools: Bash, Read, Grep, Glob

@@ -2,6 +2,7 @@
 name: plan
 description: Start, resume and close repo plans (.plans/<issue>-<slug>.md). "/prog plan <task>" drafts a plan for approval; bare "/prog plan" resumes the active one; "/prog done" harvests and deletes it. Use without being asked whenever work will span more than one sitting or several commits ("let's build X", a large issue); when the user says "carry on", "continue the plan", "next step", or approves a draft ("go", "looks good"); and when work is finished ("that's done", "wrap this up"). Skip for small single-session changes. Never touches native /plan or plan mode.
 argument-hint: "[task to plan — omit to resume]"
+user-invocable: false
 ---
 
 # Plans
