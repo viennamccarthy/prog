@@ -1,7 +1,15 @@
 {
   "name": "prog",
   "type": "module",
+  "bin": {
+    "prog": "bin/prog"
+  },
   "scripts": {
-    "docs:check": "bun scripts/check-docs.ts"
+    "docs:check": "bin/prog check-docs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "typescript": "^7.0.2"
   }
 }
