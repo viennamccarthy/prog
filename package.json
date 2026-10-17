@@ -1,0 +1,7 @@
+{
+  "name": "prog",
+  "type": "module",
+  "scripts": {
+    "docs:check": "bun scripts/check-docs.ts"
+  }
+}
