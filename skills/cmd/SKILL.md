@@ -1,11 +1,11 @@
 ---
-name: prog
+name: cmd
 description: Track work across breaks: status, resume, plan, done, why, tidy, setup
 argument-hint: "[status|resume|plan|done|why|tidy|setup] [notes]"
 disable-model-invocation: true
 ---
 
-# prog
+# prog (router)
 
 Route by the first word of the arguments. Do only what the row says; this command never acts on its own initiative. Any words after the subcommand are the user's: pass them to the skill as part of the request (a task, a file and line, or extra instructions to follow).
 
