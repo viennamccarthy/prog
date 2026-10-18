@@ -2,6 +2,12 @@
 
 A Claude Code plugin (and its own one-plugin marketplace) that packages a personal repo system. This repo dogfoods the system it ships.
 
+## Working on prog
+
+- **The main checkout (`~/Dev/prog`) is the installed plugin**, read in place by every session on this machine. Never edit files, commit, or switch branches there. Before changing anything, create or enter a worktree: `git worktree add .worktrees/<issue>-<slug> -b <issue>-<slug> main`, and work only inside it. Git hooks in `githooks/` enforce this; never bypass them with `PROG_ALLOW_MAIN_CHECKOUT`.
+- After a PR merges: `git pull` in the main checkout, remove the worktree, and ask the user to run `/reload-plugins`.
+- Mods run without Node: anything `hooks/register.tsx` imports from `src/` must import no Node or Bun modules (see `src/line.ts`).
+
 <!-- prog v2 -->
 ## How this repo works
 

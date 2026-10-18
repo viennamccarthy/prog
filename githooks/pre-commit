@@ -1,0 +1,11 @@
+#!/bin/sh
+# The main checkout is the installed plugin, read in place by every session:
+# work happens in a worktree, so nothing half-done ever runs.
+[ "$(git rev-parse --git-dir)" = "$(git rev-parse --git-common-dir)" ] || exit 0
+[ -n "$PROG_ALLOW_MAIN_CHECKOUT" ] && exit 0
+cat >&2 <<'MSG'
+This checkout is the installed prog plugin: commit in a worktree instead.
+  git worktree add .worktrees/<branch> -b <branch> main
+(Override for an emergency: PROG_ALLOW_MAIN_CHECKOUT=1 git commit ...)
+MSG
+exit 1

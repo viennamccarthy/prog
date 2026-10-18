@@ -1,0 +1,14 @@
+#!/bin/sh
+# The main checkout is the installed plugin: it stays on main, or every
+# session runs whatever branch was checked out.
+[ "$3" = 1 ] || exit 0
+[ "$(git rev-parse --git-dir)" = "$(git rev-parse --git-common-dir)" ] || exit 0
+[ -n "$PROG_ALLOW_MAIN_CHECKOUT" ] && exit 0
+branch=$(git branch --show-current)
+[ "$branch" = main ] && exit 0
+if [ -z "$(git status --porcelain)" ]; then
+  git checkout -q main
+  echo "prog: this checkout is the installed plugin, so it went back to main. Work on '${branch:-a detached HEAD}' in a worktree: git worktree add .worktrees/<branch> <branch>" >&2
+else
+  echo "prog: WARNING: the installed plugin is now running '${branch:-a detached HEAD}'. Switch back to main and use a worktree." >&2
+fi

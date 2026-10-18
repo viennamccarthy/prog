@@ -17,6 +17,8 @@ const line = atom({ plugin: 'prog-tracker', key: 'line' } as const, null as Band
 let paneText = HELP
 let paneOpen = false
 
+// Helpers that take `$` must stay top-level function declarations: the
+// engine doesn't accept them as arrow functions or nested closures.
 async function show($: any, title: string, text: string) {
   paneText = text
   const r = await $.ui.open({
