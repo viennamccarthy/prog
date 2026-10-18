@@ -1,0 +1,15 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      # The tag is the prog version this repo's rules block follows; `/prog setup` bumps both together.
+      - run: bunx --bun github:viennamccarthy/prog#v{{version}} check-docs

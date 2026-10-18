@@ -1,0 +1,14 @@
+{
+  "name": "prog",
+  "description": "prog, one plugin: keep repos navigable across long breaks.",
+  "owner": {
+    "name": "Vienna McCarthy"
+  },
+  "plugins": [
+    {
+      "name": "prog-tracker",
+      "source": "./",
+      "description": "Keep repos navigable across long breaks: /prog resumes where you were; plans in .plans/, the why in commit bodies, a mechanical docs check."
+    }
+  ]
+}
