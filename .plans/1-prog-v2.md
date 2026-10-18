@@ -126,7 +126,8 @@ A `ui.render` hook on `AbovePrompt`, only in marked repos: one short dim line, `
   *NOTE: decided by Vienna, 18 Oct: `~/Dev/prog` stays on `main` once v2 merges; development happens in a worktree. Into the README at Close.*
 - [ ] Migrate each v1 repo: wrap its block in the marker, replace `scripts/check-docs.ts` + `docs:check` with the pinned `bunx` in CI, check its active plans still show.
   *NOTE: the CI pin `#v2.0.0` only resolves once that tag exists; tag first, or pin a pre-release tag for the trial migration.*
-- [ ] Tag `v2.0.0`.
+- [x] Tag `v2.0.0`.
+  *NOTE: 18 Oct, after squash-merging PR #2 (CI green). `bunx --bun github:viennamccarthy/prog#v2.0.0 check-docs` resolves and passes locally. Done ahead of the migration, which needs the tag for its CI pin.*
 - [ ] Decide, then fix: `autoMemoryDirectory` in user settings is a relative path (`./.claude/memory`). The setting only accepts an absolute or `~/` path (docs: memory#storage-location), so the relative value is invalid and sessions fall back to the default `~/.claude/projects/<project>/memory/`. It isn't deprecated, and there's no variable for a per-project path. Likely just remove the setting (default is right: private, and project state lives in the repo anyway); confirm with Vienna.
   *NOTE: Vienna, 18 Oct: she'll fix it herself (settings.json is sandbox-protected).*
 - [ ] Close: harvest into prog's `README.md` (the guide) and `docs/decisions/0001-prog-plugin.md`; delete the plan.
